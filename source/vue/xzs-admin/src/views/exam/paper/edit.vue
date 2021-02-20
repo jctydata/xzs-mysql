@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
-      <el-form-item label="岗位：" prop="level" required>
-        <el-select v-model="form.level" placeholder="岗位"  @change="levelChange">
+      <el-form-item label="类型：" prop="level" required>
+        <el-select v-model="form.level" placeholder="类型"  @change="levelChange">
           <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
         </el-select>
       </el-form-item>
@@ -113,7 +113,7 @@ export default {
       formLoading: false,
       rules: {
         level: [
-          { required: true, message: '请选择岗位', trigger: 'change' }
+          { required: true, message: '请选择类型', trigger: 'change' }
         ],
         subjectId: [
           { required: true, message: '请选择学科', trigger: 'change' }

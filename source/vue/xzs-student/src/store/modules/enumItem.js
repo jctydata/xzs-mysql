@@ -2,7 +2,7 @@
 const state = {
   user: {
     sexEnum: [{ key: 1, value: '男' }, { key: 2, value: '女' }],
-    levelEnum: [{ key: 1, value: '数据分析师' }, { key: 2, value: '大数据工程师' }, { key: 3, value: 'JAVA工程师' }, { key: 4, value: 'PYTHON工程师' }],
+    levelEnum: [{ key: 1, value: '招聘' }, { key: 2, value: '考试' }],
     message: {
       readTag: [{ key: true, value: 'success' }, { key: false, value: 'warning' }],
       readText: [{ key: true, value: '已读' }, { key: false, value: '未读' }]

@@ -20,7 +20,7 @@ Page({
       return;
     }
     if (form.userLevel == null || form.userLevel == '') {
-      app.message('岗位不能为空', 'error');
+      app.message('类型不能为空', 'error');
       return;
     }
     _this.setData({

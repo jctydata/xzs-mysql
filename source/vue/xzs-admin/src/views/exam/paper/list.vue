@@ -4,8 +4,8 @@
       <el-form-item label="题目ID：">
         <el-input v-model="queryParam.id" clearable></el-input>
       </el-form-item>
-      <el-form-item label="岗位：">
-        <el-select v-model="queryParam.level" placeholder="岗位" @change="levelChange" clearable>
+      <el-form-item label="类型：">
+        <el-select v-model="queryParam.level" placeholder="类型" @change="levelChange" clearable>
           <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
         </el-select>
       </el-form-item>
