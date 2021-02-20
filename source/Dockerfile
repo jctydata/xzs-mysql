@@ -18,6 +18,7 @@ FROM maven:3.6.3-jdk-8 AS jdk
 WORKDIR /build
 # Let's cache modules retrieval - those don't change so often
 COPY xzs .
+RUN mvn compile 
 COPY --from=npm /build/xzs-admin/admin  src/main/resources/static
 COPY --from=npm /build/xzs-student/student  src/main/resources/static
 RUN mvn package 
