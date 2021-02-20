@@ -19,10 +19,10 @@ WORKDIR /build
 # Let's cache modules retrieval - those don't change so often
 COPY xzs .
 RUN mvn compile 
-COPY --from=npm /build/xzs-admin/admin  src/main/resources/static
-COPY --from=npm /build/xzs-student/student  src/main/resources/static
+COPY --from=npm /build/xzs-admin/admin  src/main/resources/static/admin
+COPY --from=npm /build/xzs-student/student  src/main/resources/static/student
+RUN ls -l src/main/resources/static
 RUN mvn package 
-RUN ls -l /build/target
 # Copy the code necessary to build the application
 # You may want to change this to copy only what you actually need.
 
