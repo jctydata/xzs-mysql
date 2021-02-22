@@ -16,7 +16,7 @@
            <el-table-column prop="createTime" label="做题时间"  width="170" />
            <el-table-column  align="right" width="70">
              <template slot-scope="{row}">
-               <router-link target="_blank" :to="{path:'/edit',query:{id:row.id}}" v-if="row.status === 1 && userInfo.role !== 1">
+               <router-link target="_blank" :to="{path:'/edit',query:{id:row.id}}" v-if="row.status === 1 && userRole !== 1">
                  <el-button  type="text" size="small">批改</el-button>
                </router-link>
                <router-link target="_blank" :to="{path:'/read',query:{id:row.id}}" v-if="row.status === 2 ">
@@ -61,6 +61,7 @@ import { mapState, mapGetters } from 'vuex'
 import Pagination from '@/components/Pagination'
 import examPaperAnswerApi from '@/api/examPaperAnswer'
 import { scrollTo } from '@/utils/scroll-to'
+import userApi from '@/api/user'
 export default {
   components: { Pagination },
   data () {
@@ -82,22 +83,10 @@ export default {
       }
     }
   },
-  props: {
-    userInfo: {
-      type: Object,
-      default: () => {
-        return {
-          realName: '',
-          userName: '',
-          role: '',
-          imagePath: null
-        }
-      }
-    }
-  },
   created () {
     this.search()
     scrollTo(0, 800)
+  
   },
   methods: {
     search () {
@@ -128,7 +117,10 @@ export default {
     ...mapState('enumItem', {
       statusEnum: state => state.exam.examPaperAnswer.statusEnum,
       statusTag: state => state.exam.examPaperAnswer.statusTag
-    })
+    }),
+    ...mapState('user', {
+      userRole: state => {console.log(state);return state.userRole},
+    }),
   }
 }
 </script>

@@ -45,8 +45,16 @@ public class ExamPaperAnswerController extends BaseApiController {
 
     @RequestMapping(value = "/pageList", method = RequestMethod.POST)
     public RestResponse<PageInfo<ExamPaperAnswerPageResponseVM>> pageList(@RequestBody @Valid ExamPaperAnswerPageVM model) {
-        model.setCreateUser(getCurrentUser().getId());
-        PageInfo<ExamPaperAnswer> pageInfo = examPaperAnswerService.studentPage(model);
+        User user = getCurrentUser();
+        PageInfo<ExamPaperAnswer> = null;
+        if(user.role==1){
+            model.setCreateUser(user.getId());
+            pageInfo = examPaperAnswerService.studentPage(model);
+        }
+        else{
+            pageInfo = examPaperAnswerService.adminPage(model);
+        }
+        
         PageInfo<ExamPaperAnswerPageResponseVM> page = PageInfoHelper.copyMap(pageInfo, e -> {
             ExamPaperAnswerPageResponseVM vm = modelMapper.map(e, ExamPaperAnswerPageResponseVM.class);
             Subject subject = subjectService.selectById(vm.getSubjectId());

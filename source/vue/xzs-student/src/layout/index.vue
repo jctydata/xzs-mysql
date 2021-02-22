@@ -61,6 +61,9 @@ export default {
     this.getUserMessageInfo()
     userApi.getCurrentUser().then(re => {
       _this.userInfo = re.response
+      if (re && re.code === 1) {
+        _this.setUserRole(re.response.role)
+      }
     })
   },
   watch: {
@@ -86,7 +89,7 @@ export default {
       })
     },
     ...mapActions('user', ['getUserMessageInfo']),
-    ...mapMutations('user', ['clearLogin'])
+    ...mapMutations('user', ['clearLogin','setUserRole'])
   },
   computed: {
     ...mapState('user', {

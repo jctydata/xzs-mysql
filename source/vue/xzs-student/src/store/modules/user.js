@@ -5,7 +5,8 @@ const state = {
   userName: Cookies.get('studentUserName'),
   userInfo: Cookies.get('studentUserInfo'),
   imagePath: Cookies.get('studentImagePath'),
-  messageCount: 0
+  messageCount: 0,
+  userRole:0
 }
 
 // actions
@@ -27,6 +28,9 @@ const mutations = {
   setUserName (state, userName) {
     state.userName = userName
     Cookies.set('studentUserName', userName, { expires: 30 })
+  },
+  setUserRole (state, role) {
+    state.userRole = role
   },
   setUserInfo: (state, userInfo) => {
     state.userInfo = userInfo
