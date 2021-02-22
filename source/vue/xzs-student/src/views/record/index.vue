@@ -16,7 +16,7 @@
            <el-table-column prop="createTime" label="做题时间"  width="170" />
            <el-table-column  align="right" width="70">
              <template slot-scope="{row}">
-               <router-link target="_blank" :to="{path:'/edit',query:{id:row.id}}" v-if="row.status === 1 ">
+               <router-link target="_blank" :to="{path:'/edit',query:{id:row.id}}" v-if="row.status === 1 && userInfo.role !== 1">
                  <el-button  type="text" size="small">批改</el-button>
                </router-link>
                <router-link target="_blank" :to="{path:'/read',query:{id:row.id}}" v-if="row.status === 2 ">
@@ -79,6 +79,19 @@ export default {
         paperScore: '0',
         questionCorrect: 0,
         questionCount: 0
+      }
+    }
+  },
+  props: {
+    userInfo: {
+      type: Object,
+      default: () => {
+        return {
+          realName: '',
+          userName: '',
+          role: '',
+          imagePath: null
+        }
       }
     }
   },
