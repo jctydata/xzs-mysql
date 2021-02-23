@@ -68,7 +68,7 @@ public class SecurityConfigurer {
                     .authorizeRequests()
                     .antMatchers(securityIgnoreUrls.toArray(ignores)).permitAll()
                     .antMatchers("/api/admin/**").hasRole(RoleEnum.ADMIN.getName())
-                    .antMatchers("/api/student/**").hasRole(RoleEnum.STUDENT.getName())
+                    .antMatchers("/api/student/**").hasAnyRole(RoleEnum.STUDENT.getName(),RoleEnum.TEACHER.getName())
                     .anyRequest().permitAll()
                     .and().exceptionHandling().accessDeniedHandler(restAccessDeniedHandler)
                     .and().formLogin().successHandler(restAuthenticationSuccessHandler).failureHandler(restAuthenticationFailureHandler)
