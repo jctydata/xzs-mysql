@@ -9,6 +9,7 @@ import com.mindskip.xzs.event.UserEvent;
 import com.mindskip.xzs.service.ExamPaperAnswerService;
 import com.mindskip.xzs.service.ExamPaperService;
 import com.mindskip.xzs.service.SubjectService;
+import com.mindskip.xzs.service.UserService;
 import com.mindskip.xzs.utility.DateTimeUtil;
 import com.mindskip.xzs.utility.ExamUtil;
 import com.mindskip.xzs.utility.PageInfoHelper;
@@ -34,13 +35,15 @@ public class ExamPaperAnswerController extends BaseApiController {
     private final ExamPaperService examPaperService;
     private final SubjectService subjectService;
     private final ApplicationEventPublisher eventPublisher;
+    private final UserService userService;
 
     @Autowired
-    public ExamPaperAnswerController(ExamPaperAnswerService examPaperAnswerService, ExamPaperService examPaperService, SubjectService subjectService, ApplicationEventPublisher eventPublisher) {
+    public ExamPaperAnswerController(ExamPaperAnswerService examPaperAnswerService, ExamPaperService examPaperService, SubjectService subjectService, ApplicationEventPublisher eventPublisher, UserService userService) {
         this.examPaperAnswerService = examPaperAnswerService;
         this.examPaperService = examPaperService;
         this.subjectService = subjectService;
         this.eventPublisher = eventPublisher;
+        this.userService = userService;
     }
 
 
@@ -69,6 +72,10 @@ public class ExamPaperAnswerController extends BaseApiController {
             vm.setPaperScore(ExamUtil.scoreToVM(e.getPaperScore()));
             vm.setSubjectName(subject.getName());
             vm.setCreateTime(DateTimeUtil.dateFormat(e.getCreateTime()));
+            if(user.getRole()!=1) {
+                User u = userService.selectById(e.getCreateUser());
+                vm.setUserName(u.getUserName());
+            }
             return vm;
         });
         return RestResponse.ok(page);

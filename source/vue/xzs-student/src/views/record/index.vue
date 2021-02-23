@@ -4,16 +4,20 @@
        <el-col :span="18">
          <el-table v-loading="listLoading" :data="tableData" fit highlight-current-row style="width: 100%" @row-click="itemSelect">
            <el-table-column prop="id" label="序号" width="90px"/>
-           <el-table-column prop="paperName" label="名称"  />
-           <el-table-column prop="subjectName" label="学科"  width="70" />
-           <el-table-column label="状态" prop="status" width="100px">
-             <template slot-scope="{row}">
-               <el-tag :type="statusTagFormatter(row.status)">
-                 {{ statusTextFormatter(row.status) }}
-               </el-tag>
-             </template>
-           </el-table-column>
-           <el-table-column prop="createTime" label="做题时间"  width="170" />
+          <el-table-column prop="paperName" label="试卷名称"/>
+          <el-table-column prop="userName" label="用户名称"/>
+          <el-table-column  label="得分" width="100px" >
+            <template slot-scope="{row}">
+              {{row.userScore}} / {{row.paperScore}}
+            </template>
+          </el-table-column>
+          <el-table-column  label="题目对错" width="80px" >
+            <template slot-scope="{row}">
+              {{row.questionCorrect}} / {{row.questionCount}}
+            </template>
+          </el-table-column>
+          <el-table-column prop="doTime" label="耗时" width="100px"/>
+          <el-table-column prop="createTime" label="提交时间" width="160px"/>
            <el-table-column  align="right" width="70">
              <template slot-scope="{row}">
                <router-link target="_blank" :to="{path:'/edit',query:{id:row.id}}" v-if="row.status === 1 && userRole !== 1">
