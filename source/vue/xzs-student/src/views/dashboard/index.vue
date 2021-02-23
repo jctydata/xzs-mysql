@@ -35,7 +35,7 @@
                   <router-link target="_blank" :to="{path:'/do',query:{id:paperItem.examPaperId}}" v-if="paperItem.status === null">
                     <el-button  type="text" size="small">开始答题</el-button>
                   </router-link>
-                  <router-link target="_blank" :to="{path:'/edit',query:{id:paperItem.examPaperAnswerId}}" v-else-if="paperItem.status === 1">
+                  <router-link target="_blank" :to="{path:'/edit',query:{id:paperItem.examPaperAnswerId}}" v-else-if="paperItem.status === 1 && userRole !== 1">
                     <el-button  type="text" size="small">批改试卷</el-button>
                   </router-link>
                   <router-link target="_blank" :to="{path:'/read',query:{id:paperItem.examPaperAnswerId}}" v-else-if="paperItem.status === 2">
@@ -137,7 +137,10 @@ export default {
     ...mapState('enumItem', {
       statusEnum: state => state.exam.examPaperAnswer.statusEnum,
       statusTag: state => state.exam.examPaperAnswer.statusTag
-    })
+    }),
+    ...mapState('user', {
+      userRole: state => {console.log(state);return state.userRole},
+    }),
   }
 }
 </script>

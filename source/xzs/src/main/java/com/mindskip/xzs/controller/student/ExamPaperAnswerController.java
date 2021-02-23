@@ -13,6 +13,7 @@ import com.mindskip.xzs.utility.DateTimeUtil;
 import com.mindskip.xzs.utility.ExamUtil;
 import com.mindskip.xzs.utility.PageInfoHelper;
 import com.mindskip.xzs.viewmodel.admin.exam.ExamPaperEditRequestVM;
+import com.mindskip.xzs.viewmodel.admin.paper.ExamPaperAnswerPageRequestVM;
 import com.mindskip.xzs.viewmodel.student.exam.ExamPaperReadVM;
 import com.mindskip.xzs.viewmodel.student.exam.ExamPaperSubmitVM;
 import com.mindskip.xzs.viewmodel.student.exampaper.ExamPaperAnswerPageResponseVM;
@@ -46,13 +47,17 @@ public class ExamPaperAnswerController extends BaseApiController {
     @RequestMapping(value = "/pageList", method = RequestMethod.POST)
     public RestResponse<PageInfo<ExamPaperAnswerPageResponseVM>> pageList(@RequestBody @Valid ExamPaperAnswerPageVM model) {
         User user = getCurrentUser();
-        PageInfo<ExamPaperAnswer> = null;
-        if(user.role==1){
+        PageInfo<ExamPaperAnswer> pageInfo= null;
+        if(user.getRole()==1){
             model.setCreateUser(user.getId());
             pageInfo = examPaperAnswerService.studentPage(model);
         }
         else{
-            pageInfo = examPaperAnswerService.adminPage(model);
+            ExamPaperAnswerPageRequestVM examPaperAnswerPageRequestVM = new ExamPaperAnswerPageRequestVM();
+            examPaperAnswerPageRequestVM.setSubjectId(model.getSubjectId());
+            examPaperAnswerPageRequestVM.setPageIndex(model.getPageIndex());
+            examPaperAnswerPageRequestVM.setPageSize(model.getPageSize());
+            pageInfo = examPaperAnswerService.adminPage(examPaperAnswerPageRequestVM);
         }
         
         PageInfo<ExamPaperAnswerPageResponseVM> page = PageInfoHelper.copyMap(pageInfo, e -> {
